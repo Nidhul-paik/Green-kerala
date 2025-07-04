@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <title>otp_verification</title>
+</head>
+<body>
+  <form method="POST" action="/verify_otp">
+    <div class="input-group mb-3">
+      <span class="input-group-text"><i class="fas fa-key"></i></span>
+      <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
+    </div>
+    <button type="submit" class="btn btn-success w-100">Verify OTP</button>
+  </form>
+  
+</body>
+</html>

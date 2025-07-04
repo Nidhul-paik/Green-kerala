@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Orders</title>
+</head>
+<body>
+  <a href="{{url_for('backtostore')}}" class="btn btn-secondary fa-solid fa-arrow-left " style="position:fixed; top:10px; left:10px; font-size: 25px;"></a>
+
+    <div class="container mt-5">
+        <h3 class="mb-3">Your Orders</h3>
+        {% if orders %}
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Order Date</th>
+                <th>Expected date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+              {%if order.staus !='done':%}
+              <tr>
+                <td>
+                    <img src="{{ url_for('static', filename='product_images/' + order.image) }}" width="80" height="80">
+                </td>
+                <td>{{ order.p_name }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>
+                    {%if order.status == 'paid':%}
+                        <span class="text-success" style="font-weight: 500;">paided</span>
+                    {%else:%}
+                    ₹{{ order.price }}
+                    {%endif%}
+                </td>
+                <td>{{ order.order_date.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    {% if order.exp_date != 'None' %}
+                      {{ order.exp_date }}
+                    {% endif %}
+                  </td>
+                 <td>
+                  <form action="{{ url_for('doneorder', id=order.order_id) }}" method="POST">
+                    <button type="submit" class="btn btn-sm btn-warning w-100" style="font-weight: 900;">
+                      Done
+                    </button>
+                  </form>
+                  
+                </td>
+              </tr>
+              {%endif%}
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>No orders found.</p>
+        {% endif %}
+      </div>
+</body>
+</html>

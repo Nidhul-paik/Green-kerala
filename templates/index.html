@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index </title>
+  <link rel="stylesheet" href="{{url_for('static',filename='/css/style.css')}}">
+  <!-- If you use Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+</head>
+
+<body>
+  <!-- header -->
+  {% include 'header.html' %}
+
+  <!-- This will HIDE the image on extra small screens -->
+  <div class="container-fluid w-100 d-none d-sm-block mt-5"
+       style="background-image: url('/static/image/intro3.jpg'); background-size: cover; background-repeat: no-repeat; height:300px;">
+  </div>
+
+  <!--- Home  -->
+  <section class="home w-100 container-fluid p-0 mb-6" >
+    <div class="container-fluid  d-flex py-1 d-none d-sm-block " style="height:40px;background-color:green;"><h6 class="text-light ml-5">{{text['home']}}</h6></div>
+    
+    <div class="container mt-4">
+      <h5 class="w-100">{{ text['sena'] }}</h5>
+      <hr class="w-100 border-bottom">
+      
+      <div class="container w-100 p-sm-0 m-sm-0"
+           style="height:500px; background-image: url('/static/image/home2.webp'); background-repeat: no-repeat; background-size:cover;">
+      </div>
+    </div>
+  </section>
+
+
+  <!------About------>
+  <section class="about container py-5" id="aboutus">
+    <h3 class="text-center mb-4"><u>{{ text['about'] }}</u></h3>
+    
+    <div class="row align-items-center">
+      <!-- About text -->
+      <div class="col-md-12 col-sm-6 mb-4 mb-md-0">
+        <p style="font-size: 20px;">{{ text['aboutsena'] }}</p>
+      </div>
+  
+      <!-- Image Column: only visible on small screens -->
+      <div class="col-12 d-block d-md-none">
+        <img src="{{ url_for('static', filename='/image/home.jpeg') }}" class="img-fluid rounded shadow mt-3" alt="About Image">
+      </div>
+    </div>
+  </section>
+  
+  
+  <!---------services----------->
+  <section class="service container  " >
+    
+    <div class="row g-4">
+      <h3 class="text-center my-5">{{text['service']}}</h3>
+
+      <!-- waste collection -->
+      <div class="col-md-4">
+       <a href="{{url_for('wasteregistration')}}" class="text-decoration-none">
+        <div class="card h-100 shadow rounded-3">
+          <div class="card-body text-center">
+            <i class="fas fa-recycle fa-3x text-success mb-3"></i>
+            <h5 class="card-title">Waste Collection</h5>
+            <p class="card-text">{{text['wastecollection']}}</p>
+          </div>
+        </div>
+       </a>
+      </div>
+  
+      <!-- complaint registration -->
+      <div class="col-md-4">
+       <a href="{{url_for('complaintregisterationpage')}}" class="text-decoration-none">
+        <div class="card h-100 shadow rounded-3">
+          <div class="card-body text-center">
+            <i class="fas fa-exclamation-circle fa-3x text-success mb-3"></i>
+            <h5 class="card-title">Complaint Registration</h5>
+            <p class="card-text">{{text['complaintregistration']}}</p>
+          </div>
+        </div>
+       </a>
+      </div>
+  
+     <!--  Green Store -->
+      <div class="col-md-4">
+        <a href="{{url_for('greenstore')}}" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow rounded-3">
+            <div class="card-body text-center">
+              <i class="fas fa-shopping-basket fa-3x text-success mb-3"></i>
+              <h5 class="card-title">Green Store</h5>
+              <p class="card-text">
+                {{text['greenstore']}}
+              </p>
+              <a href="#" class="btn btn-success btn-sm mt-2">Visit Store</a>
+            </div>
+          </div>
+        </a>
+      </div>
+
+  
+    </div>
+  </section>
+  
+
+
+<!-----------Popup section ------------->
+
+<!-- -----login----- -->
+ 
+  <div id="modal-backdrop"></div>
+
+  <div id="login">
+    <i class="fa-solid fa-xmark " id="loginclose" style="float:right;"></i>
+    <h4 class="text-center mb-4"style="font-weight: 900;">LOGIN</h4>
+
+    <form method="POST"  class="loginform" id="loginform" action="/login">
+      <!-- Username field -->
+      <div class="input-group mb-3">
+        <span class="input-group-text"><i class="fas fa-user"></i></span>
+        <input type="email" class="form-control" name="email" placeholder="Username" required>
+      </div>
+
+      <!-- Password field -->
+      <div class="input-group mb-4" style="position: relative;">
+        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+        <input type="password" class="form-control" name="password" placeholder="Password" id="passwordInput" required>
+        
+        <!-- 👁️ Eye icon -->
+        <span class="toggle-password" onclick="togglePasswordVisibility()" style="position:absolute; top:10px; right:15px; cursor:pointer;">
+          👁️
+        </span>
+      </div>
+      <p id="loginError" style="color: red;"></p>    
+      <button type="submit" class="btn btn-primary loginbtn w-100"style="font-weight: 900;">Login</button>
+    </form>
+
+    <p class="text-center mt-3">
+      Don't have an account? <a  id="opensignup" >Register</a>
+    </p>
+    <a href="{{url_for('forgot_password')}}">forgot password?</a>
+  </div>
+</div>
+
+<!---------- signup------- -->
+
+<div id="Signup">
+  <i class="fa-solid fa-xmark " id="Signupclose" style="float:right;"></i>
+  <h4 class="text-center mb-4" style="font-weight: 900;">SIGNUP</h4>
+
+  <form method="POST"  class="Signupform" action="/Signup">
+    <div class="row container">
+      <div class="col-md-6 d-flex justify-content-center flex-column">
+        <!-- Username field -->
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+          <input type="text" class="form-control" name="username" placeholder="Name" required>
+        </div>
+
+        <!-----user email------->
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+          <input type="email" class="form-control" name="email" placeholder="Email" required>
+        </div>
+        <small class="text-danger error-message" id="error-email"></small>
+
+        <!-----mobile number------>
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="fas fa-phone"></i></span>
+          <input type="text" class="form-control" name="mob" placeholder="Contact No" required>
+        </div>
+        <small class="text-danger error-message" id="error-mob"></small>
+
+        <!---------Addres--------->
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="fas fa-location-dot"></i></span>
+          <input type="text" class="form-control" name="address" placeholder="Address" required>
+        </div>
+        <!-------Ward No------->
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="fas fa-house"></i></span>
+          <input type="text" class="form-control" name="wardno" placeholder="Ward No" required>
+        </div>
+        <!-- Password field -->
+        
+        <div class="input-group mb-4 position-relative">
+          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <input type="password" class="form-control" name="pass" placeholder="Password" id="password" required>
+          <span class="position-absolute end-0 top-50 translate-middle-y me-3" style="cursor:pointer;" onclick="togglePassword('password', 'eye1')">
+            <i id="eye1" class="fa fa-eye"></i>
+          </span>
+        </div>
+        <small class="text-danger error-message" id="error-pass"></small>
+      </div>
+
+      <div class="col-md-6 d-flex justify-content-center flex-column">
+        <!-- Location Map -->
+        <div class="mb-3">
+          <label>Select Your Location:</label>
+          <div id="map" style="height: 268px;"></div>
+        </div>
+
+        <!-- Hidden fields to store coordinates -->
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+
+        <!-- Password repeat field -->
+        <div class="input-group mb-4 position-relative">
+          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <input type="password" class="form-control" name="cpass" placeholder="Confirm Password" id="confirmPassword" required>
+          <span class="position-absolute end-0 top-50 translate-middle-y me-3" style="cursor:pointer;" onclick="togglePassword('confirmPassword', 'eye2')">
+            <i id="eye2" class="fa fa-eye"></i>
+          </span>
+        </div>
+        <small class="text-danger error-message" id="error-cpass"></small>
+
+      </div>
+      
+    </div>
+    <button type="submit" class="btn btn-primary Signupbtn w-100" style="font-weight: 900;">SignUp</button>
+  </form>
+
+  <p class="text-center mt-3">
+    Already have an account? <a id="startlogin" >Login</a>
+  </p>
+</div>
+
+
+<!------otp verification window------>
+<div id="OtpVerify" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background-color: white; padding: 30px; border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); z-index: 1000; width: 90%; max-width: 400px;">
+  
+  <i class="fa-solid fa-xmark" id="OtpClose" style="float: right; cursor: pointer;"></i>
+
+  <h4 class="text-center mb-4" style="font-weight: 900;">OTP Verification</h4>
+
+  <form method="POST" id="otpForm" action="/verify_otp">
+    <div class="input-group mb-3">
+      <span class="input-group-text"><i class="fas fa-key"></i></span>
+      <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100" style="font-weight: 900;">Verify OTP</button>
+
+    <p class="text-danger mt-2 text-center" id="otpError" style="display: none;">Invalid or expired OTP</p>
+  </form>
+</div>
+
+
+  <!----------footer--------->
+  {% include 'footer.html' %}
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+      
+    // Get references to the HTML elements
+    const popup = document.getElementById('login');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const closePopupButton = document.getElementById('loginclose');
+    const signupModal = document.getElementById('Signup')
+    const closeSignupButton = document.getElementById('Signupclose')
+    const opensignup = document.getElementById('opensignup')
+    const startlogin = document.getElementById('startlogin')
+    const logouticon = document.getElementById('logouticon')
+    const profile = document.getElementById('profile');
+    
+  
+    // Function to show both the popup and its backdrop
+    function showPopup() {
+     
+        // Only attempt to show if the elements exist in the DOM
+        if (popup && modalBackdrop) {
+         
+            modalBackdrop.style.display = 'block'; // Make the backdrop visible
+            popup.style.display = 'block';         // Make the popup visible
+            signupModal.style.display = 'none';
+        }
+    }
+  
+    // Function to hide both the popup and its backdrop
+    function hidePopup() {
+        if (popup && modalBackdrop) {
+            modalBackdrop.style.display = 'none'; // Hide the backdrop
+            popup.style.display = 'none';         // Hide the popup
+        }
+    }
+  
+    // Add event listener to the close button inside the popup
+    if (closePopupButton) {
+      
+        closePopupButton.addEventListener('click', hidePopup);
+    }
+  
+    // Add event listener to the backdrop itself.
+    // Clicking anywhere on the transparent overlay will close the popup.
+    if (modalBackdrop) {
+     
+        modalBackdrop.addEventListener('click', hidePopup);
+        modalBackdrop.addEventListener('click',hideSignup)
+    }
+  
+    // This is the Flask (Jinja2) part.
+    // The JavaScript code inside this block will only be included in the HTML
+    // if the 'user' variable passed from your Flask route is falsy (e.g., None, False).
+    {% if not user and show_login %}
+    
+      setTimeout(() => {
+        showPopup(); // Show login popup
+      }, 1000);
+    {% endif %}
+  
+    
+    function showSignupModal() {
+      if (signupModal && modalBackdrop && popup) {
+        modalBackdrop.style.display = 'block'; // Make the backdrop visible
+        signupModal.style.display = 'block';         // Make the popup visible
+        popup.style.display = 'none';
+     }
+    }
+  
+    // Function to hide both the signup and its backdrop
+    function hideSignup() {
+   
+      if (signupModal && modalBackdrop) {
+          modalBackdrop.style.display = 'none'; // Hide the backdrop
+          signupModal.style.display = 'none';         // Hide the popup
+      }
+    }
+    
+  
+  if (opensignup) {
+   
+    opensignup.addEventListener('click', showSignupModal);
+  }
+  
+  if (startlogin) {
+    
+    startlogin.addEventListener('click', showPopup);
+  }
+  
+  if (closeSignupButton) {
+    
+    
+        closeSignupButton.addEventListener('click', hideSignup);
+    
+    
+  }
+  
+  
+  if(profile){
+    console.log('profile');
+    profile.addEventListener('click',function(){
+      console.log('profileclick');
+  
+       {% if  not user and  show_login %}
+       
+          showPopup();
+       {% else  %}
+           // If user IS logged in (Jinja2 check), redirect the browser to the profile page
+          window.location.href = "{{ url_for('profile') }}";
+  
+       {% endif %}
+    }) 
+   
+  }
+  
+  if(logouticon){
+    logouticon.addEventListener('click',function(){
+      window.location.href = "{{url_for('logout')}}";
+    })
+  }
+  
+  
+      // Default start position (Kerala)
+      const startLat = 10.8505;
+      const startLng = 76.2711;
+    
+      // Create map
+      const map = L.map('map').setView([startLat, startLng], 10);
+    
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+    
+      // Add draggable marker
+      const marker = L.marker([startLat, startLng], { draggable: true }).addTo(map);
+    
+      // Helper to write coords to hidden inputs
+      function setCoords(lat, lng) {
+        document.getElementById('latitude').value  = lat.toFixed(6);
+        document.getElementById('longitude').value = lng.toFixed(6);
+      }
+    
+      // Update when marker is dragged
+      marker.on('dragend', e => {
+        const { lat, lng } = e.target.getLatLng();
+        setCoords(lat, lng);
+      });
+    
+      // Update when user clicks the map
+      map.on('click', e => {
+        marker.setLatLng(e.latlng);
+        setCoords(e.latlng.lat, e.latlng.lng);
+      });
+    
+      // Store initial coordinates
+      setCoords(startLat, startLng);
+   
+      
+        // Close OTP popup
+        document.getElementById("OtpClose").addEventListener("click", function () {
+          document.getElementById("OtpVerify").style.display = "none";
+        });
+      
+        // ✅ Show OTP popup
+        function showOtpPopup() {
+          document.getElementById("Signup").style.display = "none";
+          document.getElementById("OtpVerify").style.display = "block";
+        }
+      
+
+        // ✅ Signup form submission
+        document.querySelector('.Signupform').addEventListener('submit', function (e) {
+          e.preventDefault();
+          document.querySelectorAll('.error-message').forEach(el => el.innerText = '');
+      
+          const formData = new FormData(this);
+      
+          fetch('/Signup', {
+            method: 'POST',
+            body: formData
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === 'error') {
+              const errors = data.errors || {};
+              for (const field in errors) {
+                const errorEl = document.getElementById('error-' + field);
+                if (errorEl) errorEl.innerText = errors[field];
+              }
+            } else if (data.status === 'ok') {
+              showOtpPopup();
+            }
+          })
+          .catch(err => {
+            console.error('Signup Error:', err);
+          });
+        });
+      
+        // ✅ OTP form submission
+        document.getElementById("otpForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+      
+          const formData = new FormData(this);
+      
+          fetch('/verify_otp', {
+            method: 'POST',
+            body: formData
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === 'success') {
+              document.getElementById("OtpVerify").style.display = "none";
+              console.log('popotp');
+              showPopup();
+            } else {
+              document.getElementById("otpError").innerText = "Invalid or expired OTP";
+              document.getElementById("otpError").style.display = "block";
+            }
+          })
+          .catch(err => {
+            console.error('OTP Verify Error:', err);
+            document.getElementById("otpError").innerText = "Server error. Try again.";
+            document.getElementById("otpError").style.display = "block";
+          });
+        });
+      
+        // ✅ Login form submission
+        document.getElementById("loginform").addEventListener("submit", function (e) {
+          e.preventDefault();
+      
+          const formData = new FormData(this);
+      
+          fetch("/login", {
+            method: "POST",
+            body: formData
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === 'success') {
+             
+              if (data.role === 'admin') {
+               
+                window.location.href = '/adminpannel';  // You need to create a route for this
+              } else {
+                
+                location.reload(); // or redirect to user homepage
+              }
+             
+            } else {
+              document.getElementById("loginError").innerText = data.message || "Login failed!";
+            }
+          })
+          .catch(err => {
+            console.error("Login Error:", err);
+            document.getElementById("loginError").innerText = "Server error. Try again later.";
+          });
+        });
+
+
+        
+      });
+  </script>
+
+  <script>
+    function togglePasswordVisibility() {
+      console.log("hello")
+      const input = document.getElementById("passwordInput");
+      const toggle = document.querySelector(".toggle-password");
+      if (input.type === "password") {
+          input.type = "text";
+          toggle.textContent = "🙈"; // or use a different icon
+      } else {
+          input.type = "password";
+          toggle.textContent = "👁️";
+      }
+  }
+
+  function togglePassword(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  }
+  </script>    
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+.env
+__pycache__/
+static/
+*.pyc
+*.log
+venv/
+node_modules/
+templates/js.html
+templates/test.html

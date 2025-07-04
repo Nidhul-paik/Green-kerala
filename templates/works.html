@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>works</title>
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    .map-container {
+      height: 200px;
+      width: 300px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="d-flex justify-content-center align-items-center flex-column" id="users-space" style="min-height: 100vh;">
+  <a onclick="goBack()" class="btn btn-secondary fa-solid fa-arrow-left" style="position:fixed; top:10px; left:10px; font-size: 25px;"></a>
+ {%if flag:%}
+  <div class="container">
+    <div class="text-center" style="font-weight: 600; font-size:50px; margin: 100px 0;">Targets</div>
+
+    <div class="container my-5">
+     <h5 class="text-warning">After collection please click on Done</h5>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered shadow">
+          <thead class="table-success">
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Ward No</th>
+              <th>Address</th>
+              <th>Location</th>
+              <th>Operation</th>
+            </tr>
+          </thead>
+          <tbody>
+        {%else:%}
+            <h4>No works found</h4>
+        {%endif%}
+            {% for work in works %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ work.username }}</td>
+              <td>{{ work.mob }}</td>
+              <td>{{ work.wardno }}</td>
+              <td>{{ work.address }}</td>
+              <td>
+                
+                <div id="map{{ work.user_id }}" style="height: 200px; width:300px; margin-top: 10px;"></div>
+              </td>
+              <td>
+                <form action="{{ url_for('taskdone', id=work.waste_id )}}" method="POST">
+                  <button class="btn btn-warning" onclick="return confirm('Are you sure?')">Done</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Dynamic Map Script -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        {% for work in works %}
+          (function () {
+            const lat = {{ work.latitude }};
+            const lon = {{ work.longitude }};
+            const mapId = "map{{ work.user_id }}";
+            const map = L.map(mapId).setView([lat, lon], 13);
+    
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+    
+            L.marker([lat, lon]).addTo(map)
+              .bindPopup("User Location")
+              .openPopup();
+          })();
+        {% endfor %}
+  
+        
+      });
+  </script>
+  <script>
+    function goBack() {
+      window.history.back();
+  }
+  </script>
+  
+
+</body>
+</html>

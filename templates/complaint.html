@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complaint Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-container {
+      max-width: 700px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+
+</head>
+<body>
+<!--header-->
+{% include 'header.html' %}
+<a href="{{url_for('home')}}" class="btn btn-secondary fa-solid fa-arrow-left " style="position:fixed; top:110px; left:10px; font-size: 25px;"></a>
+
+<div class="container form-container" style="margin-top:100px;">
+  <h4 class="text-center mb-4">Register a Waste Management Complaint</h4>
+  <form action="/submit_complaint" method="POST" enctype="multipart/form-data">
+
+    <div class="mb-3">
+      <label for="wasteType" class="form-label">Type of Waste</label>
+      <select class="form-select" name="waste_type" id="wasteType" required>
+        <option value="">-- Select Waste Type --</option>
+        <option value="Plastic">Plastic</option>
+        <option value="Organic">Organic</option>
+        <option value="E-waste">E-waste</option>
+        <option value="Hazardous">Hazardous</option>
+        <option value="Others">Others</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <input type="text" class="form-control" name="location" id="location" placeholder="Enter location" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="media" class="form-label">Upload Image or Video (Optional)</label>
+      <input type="file" class="form-control" name="media" id="media" accept="image/*,video/*">
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Describe the Issue</label>
+      <textarea class="form-control" name="description" id="description" rows="4" placeholder="Provide details..." required></textarea>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Submit Complaint</button>
+    </div>
+
+  </form>
+</div>
+<!--script code-->
+{% include 'jsfooter.html' %}
+</body>
+</html>
