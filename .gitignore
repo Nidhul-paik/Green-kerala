@@ -1,6 +1,6 @@
 .env
 __pycache__/
-static/
+static/product_images/
 *.pyc
 *.log
 venv/

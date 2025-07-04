@@ -87,7 +87,7 @@ def admin_panel():
         # Fetch waste data
         conn = get_db_connection()
         
-        return render_template("adminpannel.html", complaints=complaints,greenkerala="Green Kerala")
+        return render_template("admin_panel.html", complaints=complaints,greenkerala="Green Kerala")
 
     else:
         return redirect('/')
@@ -100,7 +100,7 @@ def collectors():
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("SELECT * FROM collectors")
         collectors = cur.fetchall()
-        return render_template('collectorsshow.html',collectors=collectors,)
+        return render_template('collectors_show.html',collectors=collectors,)
 
 @app.route('/delete_collector/<int:id>', methods=['POST'])
 def delete_collector(id):
@@ -272,7 +272,7 @@ def profile():
 
     
 
-    return render_template("userprofile.html",user=user,flag = flag)
+    return render_template("user_profile.html",user=user,flag = flag)
 
 
 @app.route("/edituser")
@@ -322,9 +322,9 @@ def update_user():
 def wasteregistration():
     user = session.get('user')
     if user:
-        return render_template('wasteregistration.html' ,user =user,show_login=False )
+        return render_template('waste_registration.html' ,user =user,show_login=False )
     else:
-        return render_template('wasteregistration.html',user=None,show_login=True)
+        return render_template('waste_registration.html',user=None,show_login=True)
 
 # waste collection booking
 @app.route('/bookwaste', methods=['POST'])
@@ -333,7 +333,7 @@ def bookwaste():
         user = session.get('user')
         user_id = session.get('user_id')
         if not user:
-            return render_template('wasteregistration.html' ,user=None,show_login=True)
+            return render_template('waste_registration.html' ,user=None,show_login=True)
         else:
             current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -456,52 +456,13 @@ def add_collector():
 
 @app.route('/storepanel')
 def storepanel():
-    return render_template('storepanel.html')
+    return render_template('store_panel.html')
 
 
 @app.route('/addproductpage')
 def addproductpage():
-    return render_template('addproduct.html')
+    return render_template('add_product.html')
 
-# #----product adding---
-# app.config['UPLOAD_FOLDER'] = 'static/uploads'
-# #---- store panel----
-# @app.route('/storepanel', methods=['GET','POST'])
-# def storepanel():
-#     conn = get_db_connection()
-#     cur = conn.cursor()
-
-    
-#     if request.method == 'POST':
-#         p_name = request.form['p_name']
-#         price = request.form['price']
-#         p_type = request.form['type']
-#         image = request.files.get('image')
-
-#         if image and image.filename != '':
-#             filename = secure_filename(image.filename)
-#             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-#             image.save(image_path)
-
-#             cur.execute("""
-#                 INSERT INTO products (p_name, price, image, type)
-#                 VALUES (%s, %s, %s, %s)
-#             """, (p_name, price, filename, p_type))
-#             conn.commit()
-
-#             flash("Product added successfully!", "success")
-#         else:
-#             flash("Image not selected or upload failed", "danger")
-
-#         cur.close()
-#         conn.close()
-#         return redirect(url_for('storepanel'))
-
-#     cur.execute("SELECT * FROM products")
-#     products = cur.fetchall()
-#     cur.close()
-#     conn.close()
-#     return render_template("storepanel.html", products=products)
 
 
 @app.route('/addproduct',methods = ['GET','POST'])
@@ -530,8 +491,8 @@ def addproduct():
             cur.close()
             conn.close()
 
-            return render_template('addproduct.html')
-    return render_template('storepanel.html')
+            return render_template('add_product.html')
+    return render_template('store_panel.html')
 
 
 
@@ -561,7 +522,7 @@ def showproduct():
     cur.close()
     conn.close()
 
-    return render_template('showproduct.html',products=products)
+    return render_template('show_product.html',products=products)
 
 
 
@@ -763,7 +724,7 @@ def editcomplaint():
     cur.close()
     conn.close()
 
-    return render_template("usercomplaint.html", complaints=complaints)
+    return render_template("user_complaint.html", complaints=complaints)
 
 
 @app.route('/removecmplnt/<int:id>', methods=['POST'])
@@ -792,7 +753,7 @@ def userwaste():
     conn.close()
   
 
-    return render_template("wastecollectionbooking.html", wastecollection=wastecollection)
+    return render_template("waste_collection_booking.html", wastecollection=wastecollection)
 
 
 @app.route('/removewastebooking/<int:id>',methods=['POST','GET'])
@@ -852,7 +813,7 @@ def userorder():
 
     cur.close()
     conn.close()
-    return render_template('userorder.html',wishlist=wishlist,orders=orders,cart=cart)
+    return render_template('user_order.html',wishlist=wishlist,orders=orders,cart=cart)
 
 
 @app.route('/delete_order/<int:order_id>', methods=['POST'])
@@ -1081,7 +1042,7 @@ def adminwaste():
         users ON wastecollection.user_id = users.id;
     ''')
     waste = cur.fetchall()
-    return render_template('adminwaste.html',waste=waste)
+    return render_template('admin_waste.html',waste=waste)
 
 
 @app.route('/addtotask/<int:id>', methods=['POST'])

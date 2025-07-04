@@ -1,0 +1,310 @@
+/* Basic body styles for demonstration. Makes the page content centered. */
+
+
+/* ------------------------------------ */
+/* MODAL BACKDROP STYLES                */
+/* ------------------------------------ */
+#modal-backdrop {
+    position: fixed; /* Stays fixed relative to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Dark gray with 40% transparency */
+                                          /* (RGBA: Red, Green, Blue, Alpha) */
+    z-index: 999; /* Ensures it's above normal page content */
+    display: none; /* Initially hidden. JavaScript will change this to 'block'. */
+}
+
+/* ------------------------------------ */
+/* POPUP WINDOW STYLES                  */
+/* ------------------------------------ */
+#login {
+    position: fixed; /* Stays fixed relative to the viewport */
+    top: 50%; /* Position the top edge at 50% down the screen */
+    left: 50%; /* Position the left edge at 50% across the screen */
+    /*
+      The transform property is key for perfect centering.
+      It shifts the element back by half of its own width and half of its own height.
+    */
+    transform: translate(-50%, -50%);
+    background-color: white; /* White background for the popup content */
+    padding: 30px;
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* A more pronounced shadow */
+    z-index: 1000; /* Ensures it's above the backdrop */
+    display: none; /* Initially hidden. JavaScript will change this to 'block'. */
+    
+    max-width: 400px; /* Limit maximum width for better readability */
+    width: 90%; /* Responsive width for smaller screens */
+    text-align: center; /* Center align text inside the popup */
+    box-sizing: border-box; /* Include padding in the element's total width/height */
+}
+
+#login h2 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 1.8em;
+}
+
+#login p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+
+.loginform span{
+    background:none;
+    border: none;
+    background:white;
+    border-radius: 30px;
+}
+.loginform input{
+    border: none;
+    border: transparent;
+    background: white;
+    border-radius: 30px;
+}
+.input-group{
+    box-shadow: inset 2px 2px 5px  #babecc,
+                inset -5px -5px 10px #ffffff73;
+    border-radius: 30px;
+    padding: 5px;
+    outline: none;
+}
+.loginform button{
+    background-color: white;
+  color: green;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 2px 2px 5px #babecc, -5px -5px 10px #ffffff73;
+}
+
+
+
+
+
+#Signup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: none;
+  
+    max-width: 750px;
+    width: 90%;
+    max-height: 90vh;         /* Limit height to 90% of viewport */
+    overflow-y: auto;         /* Scroll only inside the popup if content overflows */
+    box-sizing: border-box;
+  }
+  
+
+#Signup h2 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 1.8em;
+}
+
+#Signup p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+
+.Signupform span{
+    background:none;
+    border: none;
+    background:white;
+    border-radius: 30px;
+}
+.Signupform input{
+    border: none;
+    border: transparent;
+    background: white;
+    border-radius: 30px;
+}
+
+.Signupform button{
+    background-color: white;
+  color: green;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 2px 2px 5px #babecc, -5px -5px 10px #ffffff73;
+}
+
+
+
+
+
+
+/* ------------------------admin_pannel--------------------- */
+.dash-container{
+    height: 100vh;
+    position: fixed;
+    background-color: white;
+  } 
+   .dash{ 
+    min-width: 385px;
+    background-color:#00b113;
+  }
+  .dash-head{
+    height: 100px;
+    font-size: 38px;
+    font-weight: 800;
+    color: black;
+    background: white;
+    display: flex;
+    align-items: center;
+
+  }
+  .content{
+    width: 100%;
+    height: 65px;
+    background-color:#00b113;
+    font-size: 30px;
+ 
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .dummy{
+    width: 100%;
+    height: 30px;
+    background-color: #00b113;
+    font-size: 30px;
+    
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .content_add{
+    border-radius: 50px 0px 0px 50px;
+    background-color:white;
+    color:black;
+  }
+  .content .fas{
+    margin-right: 20px;
+    margin-left: 25px;
+  }
+  
+  .sport{
+    position: absolute;
+    height: 100vh;
+    right: 0;
+    top: 0;
+    min-width: 450px;
+    overflow: scroll;
+    background-color: white;
+    width: 80%;
+  }
+  
+  #sports-space .fa-times{
+    
+    font-size: 25px;
+  margin-right: 30px;
+  margin-top: 30px;
+  float: right;
+  }
+  #users-space .fa-times{
+    
+    font-size: 25px;
+  margin-right: 15px;
+  margin-top: 30px;
+  float: right;
+  }
+  
+  #close-sports{
+    position: absolute;
+    right: 0;
+  }
+  #sports-space .fa-times{
+    
+    font-size: 25px;
+  margin-right: 30px;
+  margin-top: 30px;
+  float: right;
+  }
+  
+  .border-table{
+    border: 2px solid black;
+    
+    
+  }
+  
+  th, td{
+    margin-left: 20px;
+  } 
+  .sports_area{
+    position: absolute;
+    background: red;
+    top: 0;
+    right: 0;
+    width: 500px;
+    height: 100vh;
+  }
+  #close_sports_add{
+    float: right;
+    font-size: 25px;
+    margin: 5px;
+    color: white;
+
+
+  }
+
+  .sports_insert{
+    width: 80%;
+    height: 100vh;
+    background:transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 50px;
+  }
+  .sports_input{
+    width: 390px;
+    height: 45px;
+    border-bottom-color: 2px white;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 10px;
+    color:white;
+    background-color: transparent;
+    margin-bottom: 10px;
+  }
+  .sports_input[type="file"] {
+    background-color: inherit; /* Ensure background color is inherited */
+    border: none; /* Remove border if any */
+    outline: none; /* Remove outline */
+    cursor: pointer; /* Set cursor to pointer */
+}
+
+.sports_input[type="file"]:focus {
+    background-color: inherit; /* Maintain background color on focus */
+    outline: none; /* Ensure no outline on focus */
+    box-shadow: none; /* Remove any box shadow on focus */
+}
+
