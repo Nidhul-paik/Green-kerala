@@ -34,16 +34,16 @@ A complete waste management and green initiative support system built with **Fla
 ## 📸 Demo
 
 ### 🏠 Home Page
-![Home Page](static/images/homepage.jpeg "Home Page")
+![Home Page](static/image/homepage.jpeg "Home Page")
 
 ### 💳 Payment Integration
-![Payment](static/images/payment_integration.jpeg "Payment Gateway")
+![Payment](static/image/payment_integration.jpeg "Payment Gateway")
 
 ### 👤 User Dashboard
-![User Panel](static/images/userpanel.jpeg "User Dashboard")
+![User Panel](static/image/userpanel.jpeg "User Dashboard")
 
 ### 🛍️ Green Store
-![Store](static/images/store.jpeg "Eco Product Store")
+![Store](static/image/store.jpeg "Eco Product Store")
 
 
 
